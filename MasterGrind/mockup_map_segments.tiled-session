@@ -1,0 +1,66 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "mockup_map_segments.tmx",
+    "expandedProjectPaths": [
+    ],
+    "exportAsImage.useCurrentScale": true,
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
+        "C:/Users/Jani/1bit.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/Jani/untitled.tmx": {
+            "scale": 3,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 133.33333333333334,
+                "y": 97
+            }
+        },
+        "mockup_map_segments.tmx": {
+            "scale": 4,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 130.375,
+                "y": 86.25
+            }
+        },
+        "spritesheet.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        }
+    },
+    "last.imagePath": "C:/Users/Jani/Documents/VaultacularJam",
+    "map.fixedSize": true,
+    "map.height": 24,
+    "map.lastUsedFormat": "tmx",
+    "map.orientation": 1,
+    "map.tileHeight": 8,
+    "map.tileWidth": 8,
+    "map.width": 32,
+    "openFiles": [
+        "spritesheet.tsx",
+        "mockup_map_segments.tmx"
+    ],
+    "project": "mockup_map_segments.tiled-project",
+    "recentFiles": [
+        "spritesheet.tsx",
+        "mockup_map_segments.tmx",
+        "C:/Users/Jani/1bit.tsx",
+        "C:/Users/Jani/untitled.tmx"
+    ],
+    "tileset.embedInMap": false,
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 8,
+        "width": 8
+    },
+    "tileset.type": 0
+}
