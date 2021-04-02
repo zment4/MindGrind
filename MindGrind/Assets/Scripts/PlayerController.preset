@@ -1,0 +1,563 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!181963792 &2655988077585873504
+Preset:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PlayerController
+  m_TargetType:
+    m_NativeTypeID: 114
+    m_ManagedTypePPtr: {fileID: 11500000, guid: 1ecb0eaad5530a24ebafbd52f6e07d08, type: 3}
+    m_ManagedTypeFallback: 
+  m_Properties:
+  - target: {fileID: 0}
+    propertyPath: m_Enabled
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorHideFlags
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorClassIdentifier
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Jump.m_Name
+    value: Jump
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Jump.m_Type
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Jump.m_ExpectedControlType
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Jump.m_Id
+    value: 8ccad405-7ba3-4f90-81f0-6b4ad9fa079b
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Jump.m_Processors
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Jump.m_Interactions
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Jump.m_SingletonActionBindings.Array.size
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Jump.m_SingletonActionBindings.Array.data[0].m_Name
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Jump.m_SingletonActionBindings.Array.data[0].m_Id
+    value: 60aa89ad-f985-494b-910f-02d1e3f57e63
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Jump.m_SingletonActionBindings.Array.data[0].m_Path
+    value: <Keyboard>/z
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Jump.m_SingletonActionBindings.Array.data[0].m_Interactions
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Jump.m_SingletonActionBindings.Array.data[0].m_Processors
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Jump.m_SingletonActionBindings.Array.data[0].m_Groups
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Jump.m_SingletonActionBindings.Array.data[0].m_Action
+    value: Jump
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Jump.m_SingletonActionBindings.Array.data[0].m_Flags
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Jump.m_SingletonActionBindings.Array.data[1].m_Name
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Jump.m_SingletonActionBindings.Array.data[1].m_Id
+    value: 442acb15-9045-4397-baa6-704d21be7ce1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Jump.m_SingletonActionBindings.Array.data[1].m_Path
+    value: <Gamepad>/buttonSouth
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Jump.m_SingletonActionBindings.Array.data[1].m_Interactions
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Jump.m_SingletonActionBindings.Array.data[1].m_Processors
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Jump.m_SingletonActionBindings.Array.data[1].m_Groups
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Jump.m_SingletonActionBindings.Array.data[1].m_Action
+    value: Jump
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Jump.m_SingletonActionBindings.Array.data[1].m_Flags
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_Name
+    value: Move
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_Type
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_ExpectedControlType
+    value: Digital
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_Id
+    value: 3e2a6bc9-639e-46da-99f3-a2a8072f95e9
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_Processors
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_Interactions
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.size
+    value: 12
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[0].m_Name
+    value: Arrow Keys
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[0].m_Id
+    value: a5868a54-7679-4a19-9d6b-a41a5efffbb0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[0].m_Path
+    value: 2DVector
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[0].m_Interactions
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[0].m_Processors
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[0].m_Groups
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[0].m_Action
+    value: Move
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[0].m_Flags
+    value: 4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[1].m_Name
+    value: up
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[1].m_Id
+    value: 4e4f034d-f13e-4074-b9e2-5c1cc9f47e58
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[1].m_Path
+    value: <Keyboard>/upArrow
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[1].m_Interactions
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[1].m_Processors
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[1].m_Groups
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[1].m_Action
+    value: Move
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[1].m_Flags
+    value: 8
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[2].m_Name
+    value: down
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[2].m_Id
+    value: 6b782253-44f5-42db-9c53-a2962d99999a
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[2].m_Path
+    value: <Keyboard>/downArrow
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[2].m_Interactions
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[2].m_Processors
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[2].m_Groups
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[2].m_Action
+    value: Move
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[2].m_Flags
+    value: 8
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[3].m_Name
+    value: left
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[3].m_Id
+    value: 135f35c3-76ec-4338-b931-f4747eda569c
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[3].m_Path
+    value: <Keyboard>/leftArrow
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[3].m_Interactions
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[3].m_Processors
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[3].m_Groups
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[3].m_Action
+    value: Move
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[3].m_Flags
+    value: 8
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[4].m_Name
+    value: right
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[4].m_Id
+    value: ef8d5624-4142-4c25-8d61-e8116e0f24d5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[4].m_Path
+    value: <Keyboard>/rightArrow
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[4].m_Interactions
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[4].m_Processors
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[4].m_Groups
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[4].m_Action
+    value: Move
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[4].m_Flags
+    value: 8
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[5].m_Name
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[5].m_Id
+    value: fc311c7c-6d75-446c-acc5-71d8273933ce
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[5].m_Path
+    value: <Gamepad>/leftStick
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[5].m_Interactions
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[5].m_Processors
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[5].m_Groups
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[5].m_Action
+    value: Move
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[5].m_Flags
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[6].m_Name
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[6].m_Id
+    value: 3be5e917-bd89-4b24-bbd3-eb9c84662d68
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[6].m_Path
+    value: <Gamepad>/dpad
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[6].m_Interactions
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[6].m_Processors
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[6].m_Groups
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[6].m_Action
+    value: Move
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[6].m_Flags
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[7].m_Name
+    value: WASD
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[7].m_Id
+    value: 547cb2bb-7ad7-4c47-b739-ea189bb56484
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[7].m_Path
+    value: 2DVector
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[7].m_Interactions
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[7].m_Processors
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[7].m_Groups
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[7].m_Action
+    value: Move
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[7].m_Flags
+    value: 4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[8].m_Name
+    value: up
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[8].m_Id
+    value: 959cd1ca-fe0a-4b38-8ecc-8b5cea3aa5bc
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[8].m_Path
+    value: <Keyboard>/w
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[8].m_Interactions
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[8].m_Processors
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[8].m_Groups
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[8].m_Action
+    value: Move
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[8].m_Flags
+    value: 8
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[9].m_Name
+    value: down
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[9].m_Id
+    value: c54a1481-5d14-4ebb-8160-96519777e058
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[9].m_Path
+    value: <Keyboard>/s
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[9].m_Interactions
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[9].m_Processors
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[9].m_Groups
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[9].m_Action
+    value: Move
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[9].m_Flags
+    value: 8
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[10].m_Name
+    value: left
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[10].m_Id
+    value: 08b7b5aa-982f-474b-b255-c5c819a8b3d7
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[10].m_Path
+    value: <Keyboard>/a
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[10].m_Interactions
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[10].m_Processors
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[10].m_Groups
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[10].m_Action
+    value: Move
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[10].m_Flags
+    value: 8
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[11].m_Name
+    value: right
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[11].m_Id
+    value: 97593209-c149-4a7b-a7b0-b4bb78df86b0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[11].m_Path
+    value: <Keyboard>/d
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[11].m_Interactions
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[11].m_Processors
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[11].m_Groups
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[11].m_Action
+    value: Move
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Inputs.Move.m_SingletonActionBindings.Array.data[11].m_Flags
+    value: 8
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: MaxTimeToHoldJump
+    value: 0.75
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: JumpHoldStrength
+    value: 20
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: EndJumpStrength
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: MaxVerticalSpeed
+    value: 20
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: MaxHorizontalSpeed
+    value: 10
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: FloorControlSpeed
+    value: 100
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: AirControlSpeed
+    value: 25
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: FloorDrag
+    value: 0.98
+    objectReference: {fileID: 0}
+  m_ExcludedProperties: []
