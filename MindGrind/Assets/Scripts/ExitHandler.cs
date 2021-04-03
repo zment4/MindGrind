@@ -6,9 +6,9 @@ public class ExitHandler : MonoBehaviour
 {
     public RoomGenerator RoomGenerator;
 
-    public void TriggerExit(int exitNumber)
+    public void TriggerExit(int exitNumber, Vector3 deltaVector)
     {
         Debug.Log($"Exit {exitNumber} triggered.");
-        RoomGenerator?.ActivateExit(exitNumber);
+        RoomGenerator?.ActivateExit(exitNumber, deltaVector);
     }
 }

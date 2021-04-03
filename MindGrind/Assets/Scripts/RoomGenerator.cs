@@ -27,15 +27,15 @@ public class RoomGenerator : MonoBehaviour
         }
     }
 
-    public void ActivateExit(int exitNumber)
+    public void ActivateExit(int exitNumber, Vector3 deltaVector)
     {
-        EnterRoom(currentRoom.Exits.Find(x => x.Id == exitNumber).Target);
+        EnterRoom(currentRoom.Exits.Find(x => x.Id == exitNumber).Target, deltaVector);
     }
 
-    private void EnterRoom(RoomClass.ExitClass.TargetClass target)
+    private void EnterRoom(RoomClass.ExitClass.TargetClass target, Vector3 deltaVector)
     {
         ShowRoom(Rooms.Find(x => x.Id == target.RoomId));
-        Player.transform.position = SpawnHandler.GetSpawnPoint(target.ExitId);
+        Player.transform.position = SpawnHandler.GetSpawnPoint(target.ExitId) + deltaVector;
     }
 
     private void ShowRoom(RoomClass room)
@@ -112,31 +112,23 @@ public class RoomGenerator : MonoBehaviour
     }
 
     private int[] exitPairs = new int[10] { 9, 1, 3, 2, 5, 4, 6, 8, 7, 0 };
-    private int[] segmentTable = new int[10] { 0, 1, 2, 2, 5, 5, 4, 3, 3, 0 };
+    private int[] exitToSegment = new int[10] { 0, 1, 2, 2, 5, 5, 4, 3, 3, 0 };
     private int[,] exitToVariationIndex = new int[10, 2]
     {
             {0, 2}, {0, 0}, {0, 3}, {5, 3}, {5, 6},
             {4, 6}, {4, 4}, {4, 7}, {1, 7}, {1, 2},
     };
 
-    private void GenerateExits(RoomClass.ExitClass.TargetClass requiredExitTarget, int numOfExits, List<int> availableSegments, List<int> availableExits, RoomClass newRoom)
+    private void GenerateExits(RoomClass.ExitClass requiredExit, int numOfExits, List<int> availableSegments, List<int> availableExits, RoomClass newRoom)
     {
         var exitIds = new List<int>();
 
-        var requiredExitId = -1;
-
-        if (requiredExitTarget != null)
+        if (requiredExit != null)
         {
-            requiredExitId = GetRandomOppositeExit(requiredExitTarget.ExitId);
+            newRoom.Exits.Add(requiredExit);
 
-            newRoom.Exits.Add(new RoomClass.ExitClass()
-            {
-                Id = requiredExitId,
-                Target = requiredExitTarget
-            });
-
-            availableExits.Remove(requiredExitId);
-            exitIds.Add(requiredExitId);
+            availableExits.Remove(requiredExit.Id);
+            exitIds.Add(requiredExit.Id);
         }
 
         for (int i = 0; i < numOfExits; i++)
@@ -148,7 +140,8 @@ public class RoomGenerator : MonoBehaviour
 
         foreach (var exitId in exitIds)
         {
-            if (requiredExitId == exitId) 
+            if (requiredExit != null && 
+                requiredExit.Id == exitId) 
                 continue;
 
             newRoom.Exits.Add(new RoomClass.ExitClass()
@@ -168,7 +161,7 @@ public class RoomGenerator : MonoBehaviour
             exitIds.Remove(exitId);
 
             var exitPair = exitPairs[exitId];
-            var segmentId = segmentTable[exitId];
+            var segmentId = exitToSegment[exitId];
 
             availableSegments.Remove(segmentId);
 
@@ -203,7 +196,7 @@ public class RoomGenerator : MonoBehaviour
     }
     private void GenerateAltarSegment(List<int> availableSegments, List<int> availableExits, RoomClass newRoom)
     {
-        var altarSegment = Random.Range(0, 6);
+        var altarSegment = availableSegments[Random.Range(0, availableSegments.Count)];
         availableSegments.Remove(altarSegment);
         newRoom.VariationIndex[altarSegment] = 9;
         newRoom.AltarSegment = altarSegment;
@@ -270,7 +263,7 @@ public class RoomGenerator : MonoBehaviour
         return newRoom;
     }
 
-    public void GenerateRoom(RoomClass roomToGenerate, RoomClass.ExitClass.TargetClass requiredExitTarget)
+    public void GenerateRoom(RoomClass roomToGenerate, RoomClass.ExitClass requiredExit)
     {
         if (roomToGenerate == null)
         {
@@ -283,10 +276,16 @@ public class RoomGenerator : MonoBehaviour
         List<int> availableSegments = Enumerable.Range(0, 6).ToList();
         List<int> availableExits = Enumerable.Range(0, 10).ToList();
 
+        if (requiredExit != null)
+        {
+            availableExits.Remove(requiredExit.Id);
+            availableSegments.Remove(exitToSegment[requiredExit.Id]);
+        }
+
         GenerateAltarSegment(availableSegments, availableExits, roomToGenerate);
 
         var numExits = Mathf.Min(Random.Range(1, 4), availableSymbols.Count);
-        GenerateExits(requiredExitTarget, numExits, availableSegments, availableExits, roomToGenerate);
+        GenerateExits(requiredExit, numExits, availableSegments, availableExits, roomToGenerate);
 
         GenerateNoExits(availableSegments, roomToGenerate);
 
@@ -295,10 +294,13 @@ public class RoomGenerator : MonoBehaviour
         foreach (var exit in roomToGenerate.Exits)
         {
             var newRoom = Rooms.Find(x => x.Id == exit.Target.RoomId);
-            GenerateRoom(newRoom, new RoomClass.ExitClass.TargetClass()
+            GenerateRoom(newRoom, new RoomClass.ExitClass()
             {
-                ExitId = exit.Id,
-                RoomId = roomToGenerate.Id
+                Id = exit.Target.ExitId,
+                Target = new RoomClass.ExitClass.TargetClass() {
+                    ExitId = exit.Id,
+                    RoomId = roomToGenerate.Id
+                }
             });
         }
     }
