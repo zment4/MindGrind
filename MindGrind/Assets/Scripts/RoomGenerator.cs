@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class RoomGenerator : MonoBehaviour
 {
+    public GameObject EnemyBat;
+
     public class RoomClass
     {
         public int Id;
@@ -27,6 +29,8 @@ public class RoomGenerator : MonoBehaviour
         }
     }
 
+    private List<IEnemy> enemies = new List<IEnemy>();
+
     public void ActivateExit(int exitNumber, Vector3 deltaVector)
     {
         EnterRoom(currentRoom.Exits.Find(x => x.Id == exitNumber).Target, deltaVector);
@@ -34,8 +38,28 @@ public class RoomGenerator : MonoBehaviour
 
     private void EnterRoom(RoomClass.ExitClass.TargetClass target, Vector3 deltaVector)
     {
+        enemies.ForEach(x => { if (x != null && x.GameObject) Destroy(x.GameObject); });
+        enemies.Clear();
+
         ShowRoom(Rooms.Find(x => x.Id == target.RoomId));
         Player.transform.position = SpawnHandler.GetSpawnPoint(target.ExitId) + deltaVector;
+
+        SpawnEnemies();
+    }
+
+    private void SpawnEnemies()
+    {
+        if (EnemyBat == null)
+            return;
+
+        var rand = new System.Random(currentRoom.Id);
+        var enemyCount = rand.Next(1, 4);
+
+        for (int i = 0; i < enemyCount; i++)
+        {
+            var enemyBat = Instantiate(EnemyBat, new Vector3((float)rand.NextDouble() * 256f - 128f, (float)rand.NextDouble() * 208f - 104f, 0), Quaternion.identity);
+            enemies.Add(enemyBat.GetComponent<EnemyBat>());
+        }
     }
 
     private void ShowRoom(RoomClass room)

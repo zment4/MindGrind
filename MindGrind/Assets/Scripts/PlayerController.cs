@@ -56,6 +56,11 @@ public class PlayerController : MonoBehaviour
         NotJumping
     };
 
+    internal void ProcessEnemyHit(IEnemy enemy)
+    {
+        // this.health - enemy.Damage;
+    }
+
     JumpingStateEnum JumpingState;
 
     private float timeStartedJumping;

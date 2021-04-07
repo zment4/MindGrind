@@ -64,6 +64,8 @@
     <Compile Include="Assets\Scripts\FireballController.cs" />
     <Compile Include="Assets\Scripts\ExitInstance.cs" />
     <Compile Include="Assets\Scripts\RoomGenerator.cs" />
+    <Compile Include="Assets\Scripts\EnemyBat.cs" />
+    <Compile Include="Assets\Scripts\IEnemy.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
