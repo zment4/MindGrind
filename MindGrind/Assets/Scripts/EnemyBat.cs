@@ -47,13 +47,20 @@ public class EnemyBat : MonoBehaviour, IEnemy
         velocityAdd = velocityAdd - new Vector3(rb.velocity.x, rb.velocity.y, 0).normalized * Time.deltaTime * DeccelerationSpeed;
 
         rb.velocity += new Vector2(velocityAdd.x, velocityAdd.y);
+
+        transform.localScale = new Vector3(-Mathf.Sign(velocityAdd.x), 1, 1);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.name == "Player")
         {
-            collision.gameObject.GetComponent<PlayerController>().ProcessEnemyHit(this);
+            var playerController = collision.gameObject.GetComponent<PlayerController>();
+            playerController?.ProcessEnemyHit(this);
+            var playerRigidBody = collision.gameObject.GetComponent<Rigidbody2D>();
+            if (playerRigidBody != null)
+                playerRigidBody.velocity += rb.velocity * 0.2f;
+            rb.velocity = -rb.velocity * 1.25f;
         }
 
         if (collision.name.Contains("Fireball"))

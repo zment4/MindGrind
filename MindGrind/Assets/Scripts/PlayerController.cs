@@ -1,8 +1,72 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    private int _maxHealth;
+    private int maxHealth { get { return _maxHealth; } 
+        set {
+            _maxHealth = value;
+            if (StatusBarUpdater != null)
+            {
+                StatusBarUpdater.MaxHealth = _maxHealth;
+            }
+        } 
+    }
+    private int _currentHealth;
+    private int currentHealth { get { return _currentHealth; } 
+        set
+        {
+            _currentHealth = value;
+            if (StatusBarUpdater != null)
+            {
+                StatusBarUpdater.CurrentHealth = _currentHealth;
+            }
+        }
+    }
+    private int _maxMagic;
+    private int maxMagic
+    {
+        get { return _maxMagic; }
+        set
+        {
+            _maxMagic = value;
+            if (StatusBarUpdater != null)
+            {
+                StatusBarUpdater.MaxMagic = _maxMagic;
+            }
+        }
+    }
+    private int _currentMagic;
+    private int currentMagic
+    {
+        get { return _currentMagic; }
+        set
+        {
+            _currentMagic = value;
+            if (StatusBarUpdater != null)
+            {
+                StatusBarUpdater.CurrentMagic = _currentMagic;
+            }
+        }
+    }
+
+    private int _experience;
+    private int experience { get { return _experience; } 
+        set
+        {
+            _experience = value;
+            DungeonPersistentData.Instance.PlayerExperience = value;
+            if (StatusBarUpdater != null)
+            {
+                StatusBarUpdater.Experience = _experience;
+            }
+        }
+    }
+    public StatusBarUpdater StatusBarUpdater;
+
     [System.Serializable]
     public class InputsContainer
     {
@@ -15,6 +79,7 @@ public class PlayerController : MonoBehaviour
     public GameObject FireballPrefab;
     private Transform fireballPoint;
 
+    public float MagicRegenTime = 1f;
     public float MaxTimeToHoldJump = 0.75f;
     public float JumpHoldStrength = 15f;
     public float EndJumpStrength = 4f;
@@ -26,11 +91,15 @@ public class PlayerController : MonoBehaviour
     public float GravityScale = 32f;
     public float CoyoteJumpWindowTime = 0.2f;
 
+    private float lastRegenTime;
+
     private Rigidbody2D _rb;
     private Rigidbody2D rb => _rb == null ? (_rb = GetComponent<Rigidbody2D>()) : _rb;
     private Collider2D _coll;
     private Collider2D coll => _coll == null ? (_coll = GetComponent<Collider2D>()) : _coll;
     private bool jumpButtonDown = false;
+
+    public bool IsDead => currentHealth <= 0;
 
     private int direction = 1;
 
@@ -56,9 +125,28 @@ public class PlayerController : MonoBehaviour
         NotJumping
     };
 
+    internal void IncreaseExperience()
+    {
+        experience++;
+    }
+
     internal void ProcessEnemyHit(IEnemy enemy)
     {
-        // this.health - enemy.Damage;
+        if (IsDead)
+            return;
+
+        currentHealth -= enemy.Damage;
+        if (IsDead)
+        {
+            transform.rotation = Quaternion.Euler(0, 0, -90);
+            StartCoroutine(ExitDungeonSceneDelay(3f));
+        }
+    }
+
+    IEnumerator ExitDungeonSceneDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene("DungeonStart");
     }
 
     JumpingStateEnum JumpingState;
@@ -73,6 +161,12 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        experience = DungeonPersistentData.Instance.PlayerExperience;
+        maxHealth = DungeonPersistentData.Instance.PlayerHealth;
+        currentHealth = maxHealth;
+        maxMagic = DungeonPersistentData.Instance.PlayerMagic;
+        currentMagic = maxMagic;
+
         Inputs.Jump.started += _ =>
         {
             jumpButtonDown = true;
@@ -92,6 +186,12 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (currentMagic < maxMagic && (Time.time - lastRegenTime) > MagicRegenTime)
+        {
+            currentMagic++;
+            lastRegenTime += MagicRegenTime;
+        }
+
         lastTimeOnFloor = isOnFloor ? Time.time : lastTimeOnFloor;
 
         HandleJumpState();
@@ -100,6 +200,8 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Sign(rb.velocity.y) * MaxVerticalSpeed);
         }
+
+        if (IsDead) return;
 
         var moveInput = GetAndSanitizeMoveInput();
 
@@ -188,6 +290,8 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
+        if (IsDead) return;
+
         var canJump = (isOnFloor && JumpingState == JumpingStateEnum.NotJumping) || 
             (canCoyoteJump && !isOnFloor);
 
@@ -206,7 +310,7 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector2(rb.velocity.x, currentJumpStrength);
 
         if (!jumpButtonDown ||
-            Time.time - timeStartedJumping >= MaxTimeToHoldJump)
+            Time.time - timeStartedJumping >= MaxTimeToHoldJump || IsDead)
         {
             JumpingState = JumpingStateEnum.Jumping;
         }
@@ -232,8 +336,13 @@ public class PlayerController : MonoBehaviour
 
     private void Shoot()
     {
+        if (currentMagic == 0 || IsDead)
+            return;
+
         var fireball = GameObject.Instantiate(FireballPrefab, fireballPoint.transform.position, Quaternion.identity);
         fireball.GetComponent<FireballController>().Direction = direction;
         fireball.SetActive(true);
+        currentMagic -= 1;
+        lastRegenTime = Time.time;
     }
 }

@@ -53,7 +53,7 @@ public class RoomGenerator : MonoBehaviour
             return;
 
         var rand = new System.Random(currentRoom.Id);
-        var enemyCount = rand.Next(1, 4);
+        var enemyCount = rand.Next(0, 4);
 
         for (int i = 0; i < enemyCount; i++)
         {
