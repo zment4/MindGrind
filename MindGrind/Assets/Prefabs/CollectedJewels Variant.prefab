@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7346365462886024267
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 783825544428640468, guid: fd5fd4f6cee91c64bb332558f50780e5, type: 3}
+      propertyPath: m_Name
+      value: CollectedJewel2
+      objectReference: {fileID: 0}
+    - target: {fileID: 783825544428640470, guid: fd5fd4f6cee91c64bb332558f50780e5, type: 3}
+      propertyPath: ReminderJewelIndex
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 783825544428640470, guid: fd5fd4f6cee91c64bb332558f50780e5, type: 3}
+      propertyPath: CollectedJewelIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 783825545414656880, guid: fd5fd4f6cee91c64bb332558f50780e5, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 783825545414656880, guid: fd5fd4f6cee91c64bb332558f50780e5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 783825545414656880, guid: fd5fd4f6cee91c64bb332558f50780e5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 783825545414656880, guid: fd5fd4f6cee91c64bb332558f50780e5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 783825545414656880, guid: fd5fd4f6cee91c64bb332558f50780e5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 783825545414656880, guid: fd5fd4f6cee91c64bb332558f50780e5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 783825545414656880, guid: fd5fd4f6cee91c64bb332558f50780e5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 783825545414656880, guid: fd5fd4f6cee91c64bb332558f50780e5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 783825545414656880, guid: fd5fd4f6cee91c64bb332558f50780e5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 783825545414656880, guid: fd5fd4f6cee91c64bb332558f50780e5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 783825545414656880, guid: fd5fd4f6cee91c64bb332558f50780e5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 783825545414656887, guid: fd5fd4f6cee91c64bb332558f50780e5, type: 3}
+      propertyPath: m_Name
+      value: CollectedJewels
+      objectReference: {fileID: 0}
+    - target: {fileID: 783825545668014236, guid: fd5fd4f6cee91c64bb332558f50780e5, type: 3}
+      propertyPath: m_Name
+      value: CollectedJewel1
+      objectReference: {fileID: 0}
+    - target: {fileID: 783825545668014237, guid: fd5fd4f6cee91c64bb332558f50780e5, type: 3}
+      propertyPath: ReminderJewelIndex
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 783825545668014237, guid: fd5fd4f6cee91c64bb332558f50780e5, type: 3}
+      propertyPath: CollectedJewelIndex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 783825546228985325, guid: fd5fd4f6cee91c64bb332558f50780e5, type: 3}
+      propertyPath: m_Name
+      value: CollectedJewel3
+      objectReference: {fileID: 0}
+    - target: {fileID: 783825546228985327, guid: fd5fd4f6cee91c64bb332558f50780e5, type: 3}
+      propertyPath: ReminderJewelIndex
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 783825546228985327, guid: fd5fd4f6cee91c64bb332558f50780e5, type: 3}
+      propertyPath: CollectedJewelIndex
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fd5fd4f6cee91c64bb332558f50780e5, type: 3}

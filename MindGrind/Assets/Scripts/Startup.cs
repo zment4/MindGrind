@@ -13,6 +13,6 @@ public class Startup : MonoBehaviour
             Screen.SetResolution(1920, 1080, true);
 
         Debug.Log(Screen.currentResolution);
-        SceneManager.LoadScene("DungeonStart");
+        SceneManager.LoadScene("StartScreen");
     }
 }

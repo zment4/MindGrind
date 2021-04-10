@@ -5,6 +5,8 @@ using System.Linq;
 
 public class AltarController : MonoBehaviour
 {
+    public RoomGenerator RoomGenerator;
+
     [System.Serializable]
     public class SymbolSpriteTuple
     {
@@ -15,9 +17,19 @@ public class AltarController : MonoBehaviour
     public List<SymbolSpriteTuple> SymbolToSprite;
     public SpriteRenderer SpriteRenderer;
     public string Symbol;
+    public Vector3 JewelPosition => SpriteRenderer.transform.position;
 
     public void Select(string symbol)
     {
+        if (symbol == "")
+        {
+            Symbol = "";
+            if (SpriteRenderer != null)
+                SpriteRenderer.sprite = null;
+
+            return;
+        }
+
         if (SpriteRenderer == null ||
             !SymbolToSprite.Any(x => x.Symbol == symbol))
             return;
@@ -38,5 +50,15 @@ public class AltarController : MonoBehaviour
         if (SpriteRenderer == null) return;
 
         SpriteRenderer.gameObject.SetActive(true);
+    }
+
+    public void ShowText()
+    {
+        transform.Find("DownToGet").gameObject.SetActive(true);
+    }
+
+    public void HideText()
+    {
+        transform.Find("DownToGet").gameObject.SetActive(false);
     }
 }

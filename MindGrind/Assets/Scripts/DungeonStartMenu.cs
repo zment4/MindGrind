@@ -9,6 +9,11 @@ using UnityEngine.SceneManagement;
 
 public class DungeonStartMenu : MonoBehaviour
 {
+    public AudioClip EnterDungeon;
+    public AudioClip MenuActivate;
+    public AudioClip MenuCancel;
+    public AudioClip MenuSelection;
+
     [System.Serializable]
     public class Label
     {
@@ -57,15 +62,21 @@ public class DungeonStartMenu : MonoBehaviour
 
     private Tilemap _tilemap;
     private Tilemap tilemap => _tilemap == null ? (_tilemap = GetComponent<Tilemap>()) : _tilemap;
-
+    private AudioSource _audioSource;
+    private AudioSource audioSource => _audioSource == null ? (_audioSource = GetComponent<AudioSource>()) : _audioSource;
+    
     private Dictionary<string, Action> MenuIdAction;
 
     // Start is called before the first frame update
     void Start()
     {
+        blinkToggleTime = Time.time;
         MenuIdAction = new Dictionary<string, Action>()
         {
-            {"Enter", () => { SceneManager.LoadScene("GameScene"); } },
+            {"Enter", () => {             
+                audioSource.clip = EnterDungeon;
+                audioSource.Play();
+                StartCoroutine(LoadSceneAfterAudio()); } },
             {"Health", () => { BuyHealth(); } },
             {"Magic", () => { BuyMagic(); } },
         };
@@ -85,6 +96,15 @@ public class DungeonStartMenu : MonoBehaviour
         SetLabel("HealthCost", DungeonPersistentData.Instance.HealthCost);
         SetLabel("MagicCost", DungeonPersistentData.Instance.MagicCost);
         SetLabel("PlayerLevel", DungeonPersistentData.Instance.PlayerLevel);
+        SetLabel("DungeonLevel", DungeonPersistentData.Instance.DungeonLevel);
+    }
+
+    private IEnumerator LoadSceneAfterAudio()
+    {
+        while (audioSource.isPlaying)
+            yield return null;
+
+        SceneManager.LoadScene("GameScene");
     }
 
     private void SetLabel(string labelId, int number, bool clear = false)
@@ -112,11 +132,18 @@ public class DungeonStartMenu : MonoBehaviour
     private void BuyHealth()
     {
         if (DungeonPersistentData.Instance.PlayerHealth == DungeonPersistentData.Instance.HealthMax)
+        {
+            audioSource.clip = MenuCancel;
+            audioSource.Play();
             return;
+        }
 
         var cost = DungeonPersistentData.Instance.HealthCost;
         if (cost <= DungeonPersistentData.Instance.PlayerExperience)
         {
+            audioSource.clip = MenuActivate;
+            audioSource.Play();
+
             SetLabel("Experience", DungeonPersistentData.Instance.PlayerExperience, true);
 
             DungeonPersistentData.Instance.PlayerExperience -= cost;
@@ -126,17 +153,28 @@ public class DungeonStartMenu : MonoBehaviour
             SetLabel("HealthCost", DungeonPersistentData.Instance.HealthCost);
             SetLabel("Health", DungeonPersistentData.Instance.PlayerHealth);
             SetLabel("PlayerLevel", DungeonPersistentData.Instance.PlayerLevel);
+        } else
+        {
+            audioSource.clip = MenuCancel;
+            audioSource.Play();
         }
     }
 
     private void BuyMagic()
     {
         if (DungeonPersistentData.Instance.PlayerMagic == DungeonPersistentData.Instance.MagicMax)
+        {
+            audioSource.clip = MenuCancel;
+            audioSource.Play();
             return;
+        }
 
         var cost = DungeonPersistentData.Instance.MagicCost;
         if (cost <= DungeonPersistentData.Instance.PlayerExperience)
         {
+            audioSource.clip = MenuActivate;
+            audioSource.Play();
+
             SetLabel("Experience", DungeonPersistentData.Instance.PlayerExperience, true);
 
             DungeonPersistentData.Instance.PlayerExperience -= cost;
@@ -146,6 +184,10 @@ public class DungeonStartMenu : MonoBehaviour
             SetLabel("MagicCost", DungeonPersistentData.Instance.MagicCost);
             SetLabel("Magic", DungeonPersistentData.Instance.PlayerMagic);
             SetLabel("PlayerLevel", DungeonPersistentData.Instance.PlayerLevel);
+        } else
+        {
+            audioSource.clip = MenuCancel;
+            audioSource.Play();
         }
     }
 
@@ -166,6 +208,9 @@ public class DungeonStartMenu : MonoBehaviour
 
         if (CurrentSelection.SubMenu != null)
         {
+            audioSource.clip = MenuActivate;
+            audioSource.Play();
+
             CurrentSelection.SubMenu.Activate(subMenuPositions[subMenuIndex]);
             CurrentSelection.SubMenu.Select(DungeonPersistentData.Instance.ReminderSymbolRow.Symbols[subMenuIndex]);
             Active = false;
@@ -178,10 +223,21 @@ public class DungeonStartMenu : MonoBehaviour
     private int subMenuIndex => int.Parse($"{CurrentSelection.Id.Last()}") - 1;
     public void SubMenuReturn(SubMenu subMenu, string SelectedId, bool accepted)
     {
-        if (accepted && !DungeonPersistentData.Instance.ReminderSymbolRow.Symbols.Any(x => x == SelectedId))
-            DungeonPersistentData.Instance.ReminderSymbolRow.Symbols[subMenuIndex] = SelectedId;
+        if (accepted)
+        {
+            if (!DungeonPersistentData.Instance.ReminderSymbolRow.Symbols.Any(x => x == SelectedId))
+            {
+                DungeonPersistentData.Instance.ReminderSymbolRow.Symbols[subMenuIndex] = SelectedId;
+            } else
+            {
+                accepted = false;
+            }
+        }
 
         Active = true;
+
+        audioSource.clip = accepted ? MenuActivate : MenuCancel;
+        audioSource.Play();
     }
 
     private void Select(string target)
@@ -194,6 +250,9 @@ public class DungeonStartMenu : MonoBehaviour
         tilemap.SetTile(Vector3Int.RoundToInt(CurrentSelection.TilemapPosition), TileSelectionMarker);
         blinkToggleTime = Time.time + BlinkOnTime;
         isBlinkOnPeriod = false;
+
+        audioSource.clip = MenuSelection;
+        audioSource.Play();
     }
 
     private float blinkToggleTime;

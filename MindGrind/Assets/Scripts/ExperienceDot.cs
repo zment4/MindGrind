@@ -10,6 +10,8 @@ public class ExperienceDot : MonoBehaviour
     private GameObject _player = null;
     private GameObject player => _player == null ? (_player = GameObject.Find("Player")) : _player;
 
+    public AudioClip GainExperienceSound;
+
     private float timeToTarget;
     private float timeSpawned;
     private Vector3 originalPosition;
@@ -28,7 +30,10 @@ public class ExperienceDot : MonoBehaviour
         {
             var playerController = player.GetComponent<PlayerController>();
             playerController?.IncreaseExperience();
-            Destroy(gameObject);
+            GetComponent<SpriteRenderer>().sprite = null;
+            gameObject.SetActive(false);
+            var audioSrc = PlayerController.Play(gameObject, GainExperienceSound);
+            PlayerController.WaitForAudioAndDo(audioSrc, () => Destroy(gameObject));
         }
     }
 }

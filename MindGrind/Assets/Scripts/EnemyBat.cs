@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class EnemyBat : MonoBehaviour, IEnemy
 {
+    public AudioClip BatGetsHitSound;
+    public AudioClip BatDiesSound;
+
     private GameObject _player = null;
     private GameObject player => _player == null ? (_player = GameObject.Find("Player")) : _player;
 
@@ -14,12 +17,12 @@ public class EnemyBat : MonoBehaviour, IEnemy
     private Rigidbody2D _rb = null;
     private Rigidbody2D rb => _rb == null ? (_rb = GetComponent<Rigidbody2D>()) : _rb;
 
-    public int MaxHitPoints => Mathf.RoundToInt(Level * Level * 0.75f);
+    public int MaxHitPoints => Level;
 
     private int currentHitPoints = 0;
     public int CurrentHitPoints => currentHitPoints;
 
-    public int Damage => Mathf.RoundToInt(Level * Level * 0.75f);
+    public int Damage => Mathf.CeilToInt(Level / 4f);
 
     private int level = 0;
     public int Level
@@ -66,13 +69,29 @@ public class EnemyBat : MonoBehaviour, IEnemy
         if (collision.name.Contains("Fireball"))
         {
             collision.gameObject.GetComponent<FireballController>().ProcessEnemyHit();
-            ProcessDeath();
+            ProcessHit();
         }
+    }
+
+    private void ProcessHit()
+    {
+        rb.velocity = -rb.velocity * 0.5f;
+        currentHitPoints--;
+
+        PlayerController.Play(gameObject, BatGetsHitSound);
+        
+        if (currentHitPoints == 0)
+            ProcessDeath();
     }
 
     private void ProcessDeath()
     {
-        // Play animation and sound
+        var go = new GameObject();
+        var audioSrc = PlayerController.Play(go, BatDiesSound);
+        PlayerController.WaitForAudioAndDo(audioSrc, () => {
+            Destroy(go);
+        });
+
         Destroy(gameObject);
         _gameObject = null;
     }

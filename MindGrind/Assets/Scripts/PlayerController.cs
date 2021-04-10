@@ -2,21 +2,33 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using System.Linq;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
+    public AudioClip JumpSound;
+    public AudioClip LandSound;
+    public AudioClip ShootSound;
+    public AudioClip PickupJewelSound;
+    public AudioClip Pickup3rdJewelSound;
+    public AudioClip TakeDamageSound;
+    public AudioClip DieSound;
+    public AudioClip GainMagicSound;
+    public AudioClip GainFullMagicSound;
+
     private int _maxHealth;
-    private int maxHealth { get { return _maxHealth; } 
+    private int maxHealth { get { return _maxHealth; }
         set {
             _maxHealth = value;
             if (StatusBarUpdater != null)
             {
                 StatusBarUpdater.MaxHealth = _maxHealth;
             }
-        } 
+        }
     }
     private int _currentHealth;
-    private int currentHealth { get { return _currentHealth; } 
+    private int currentHealth { get { return _currentHealth; }
         set
         {
             _currentHealth = value;
@@ -54,7 +66,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private int _experience;
-    private int experience { get { return _experience; } 
+    private int experience { get { return _experience; }
         set
         {
             _experience = value;
@@ -109,6 +121,9 @@ public class PlayerController : MonoBehaviour
     {
         get
         {
+            if (!_isOnFloor && CheckIsOnFloor())
+                Play(gameObject, LandSound);
+
             if (frameIsOnFloorChecked < Time.frameCount)
             {
                 _isOnFloor = CheckIsOnFloor();
@@ -135,9 +150,11 @@ public class PlayerController : MonoBehaviour
         if (IsDead)
             return;
 
+        Play(gameObject, TakeDamageSound);
         currentHealth -= enemy.Damage;
         if (IsDead)
         {
+            Play(gameObject, DieSound);
             transform.rotation = Quaternion.Euler(0, 0, -90);
             StartCoroutine(ExitDungeonSceneDelay(3f));
         }
@@ -161,6 +178,8 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        DungeonPersistentData.Instance.CollectedSymbolRow.Clear();
+
         experience = DungeonPersistentData.Instance.PlayerExperience;
         maxHealth = DungeonPersistentData.Instance.PlayerHealth;
         currentHealth = maxHealth;
@@ -189,6 +208,8 @@ public class PlayerController : MonoBehaviour
         if (currentMagic < maxMagic && (Time.time - lastRegenTime) > MagicRegenTime)
         {
             currentMagic++;
+            Play(gameObject, currentMagic == maxMagic ? GainFullMagicSound : GainMagicSound);
+
             lastRegenTime += MagicRegenTime;
         }
 
@@ -208,6 +229,37 @@ public class PlayerController : MonoBehaviour
         Move(moveInput.x);
 
         ChangeDirection(moveInput.x);
+
+        if (moveInput.y < 0 && activeAltarController != null)
+        {
+            PickupJewel();
+        }
+    }
+
+    private void PickupJewel()
+    {
+        var audioToPlay = PickupJewelSound;
+
+        if (activeAltarController.Symbol == "")
+            return;
+
+        var firstEmptyIndex = DungeonPersistentData.Instance.CollectedSymbolRow.Symbols.ToList().FindIndex(x => x == "");
+        var roomGen = GameObject.Find("Tilemap").GetComponent<RoomGenerator>();
+
+        roomGen.CollectedJewelSprites[firstEmptyIndex].transform.position = activeAltarController.JewelPosition;
+        DungeonPersistentData.Instance.CollectedSymbolRow.Symbols[firstEmptyIndex] = activeAltarController.Symbol;
+
+        if (DungeonPersistentData.Instance.CollectedSymbolRow.Symbols.Count(x => x != "") == 3)
+        {
+            roomGen.ActivateExitGlow();
+            audioToPlay = Pickup3rdJewelSound;
+        }
+
+        Play(gameObject, audioToPlay);
+
+        roomGen.CurrentRoom.Symbol = "";
+        activeAltarController.Select("");
+        activeAltarController.HideText();
     }
 
     private void ChangeDirection(float x)
@@ -221,9 +273,9 @@ public class PlayerController : MonoBehaviour
     private void Move(float moveInput)
     {
         rb.velocity += new Vector2(
-            moveInput * 
-            (isOnFloor ? FloorControlSpeed : AirControlSpeed) * 
-            Time.deltaTime, 
+            moveInput *
+            (isOnFloor ? FloorControlSpeed : AirControlSpeed) *
+            Time.deltaTime,
             0);
 
         if (isOnFloor)
@@ -282,10 +334,59 @@ public class PlayerController : MonoBehaviour
         if (JumpingState == JumpingStateEnum.Start &&
             CheckIsUnderCeiling())
         {
+            Play(gameObject, LandSound);
+
             JumpingState = JumpingStateEnum.Jumping;
             rb.velocity = new Vector2(rb.velocity.x, 0);
             rb.position = new Vector2(rb.position.x, Mathf.Round(rb.position.y) - 2f);
         }
+    }
+
+    public static AudioSource Play(GameObject gameObject, AudioClip audio) { 
+        var audioSrc = gameObject.AddComponent<AudioSource>(); 
+        audioSrc.clip = audio; 
+        audioSrc.Play();
+
+        return audioSrc;
+    }
+    public static AudioSource PlayOneShot(AudioClip audio, System.Action action)
+    {
+        var gameObject = new GameObject();
+        var audioSrc = gameObject.AddComponent<AudioSource>();
+        audioSrc.clip = audio;
+        audioSrc.Play();
+
+        WaitForAudioAndDo(audioSrc, () => { 
+            action();
+            Destroy(gameObject);
+        });
+
+        return audioSrc;
+    }
+
+    public static AudioSource PlayOneShot(AudioClip audio)
+    {
+        return PlayOneShot(audio, () => { });
+    }
+
+    public static void WaitForAudioAndDo(AudioSource audioSrc, System.Action action)
+    {
+        DungeonPersistentData.Instance.StartCoroutine(WaitForAudioAndDoCoroutine(audioSrc, action));
+    }
+    private static IEnumerator WaitForAudioAndDoCoroutine(AudioSource audioSrc, System.Action action)
+    {
+        while (audioSrc && audioSrc.isPlaying)
+            yield return null;
+
+        if (audioSrc)
+            action();
+    }
+
+    IEnumerator DestroyAfterPlaying(AudioSource audioSrc)
+    {
+        while (audioSrc.isPlaying) yield return null;
+
+        Destroy(audioSrc);
     }
 
     public void Jump()
@@ -297,6 +398,8 @@ public class PlayerController : MonoBehaviour
 
         if (!canJump)
             return;
+
+        Play(gameObject, JumpSound);
 
         JumpingState = JumpingStateEnum.Start;
         timeStartedJumping = Time.time;
@@ -339,10 +442,42 @@ public class PlayerController : MonoBehaviour
         if (currentMagic == 0 || IsDead)
             return;
 
+        Play(gameObject, ShootSound);
+
         var fireball = GameObject.Instantiate(FireballPrefab, fireballPoint.transform.position, Quaternion.identity);
         fireball.GetComponent<FireballController>().Direction = direction;
         fireball.SetActive(true);
         currentMagic -= 1;
         lastRegenTime = Time.time;
+    }
+
+    private AltarController activeAltarController;
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (IsDead) return;
+
+        if (collision.name == "JewelAltar")
+        {
+            activeAltarController = collision.GetComponent<AltarController>();
+            if (activeAltarController.Symbol != "")
+                activeAltarController?.ShowText();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.name == "JewelAltar")
+        {
+            activeAltarController?.HideText();
+            activeAltarController = null;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        Inputs.Jump.Disable();
+        Inputs.Shoot.Disable();
+        Inputs.Move.Disable();
     }
 }

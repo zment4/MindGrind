@@ -2,9 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RoomGenerator : MonoBehaviour
 {
+    public AudioClip ActivateLastExitSound;
+
+    public List<JewelSprite> CollectedJewelSprites = new List<JewelSprite>();
+
     public GameObject EnemyBat;
 
     public class RoomClass
@@ -33,7 +38,23 @@ public class RoomGenerator : MonoBehaviour
 
     public void ActivateExit(int exitNumber, Vector3 deltaVector)
     {
-        EnterRoom(currentRoom.Exits.Find(x => x.Id == exitNumber).Target, deltaVector);
+        if (DungeonPersistentData.Instance.CollectedSymbolRow.Symbols.Count(x => x != "") == 3)
+        {
+            GameObject.Find("Player").GetComponent<Rigidbody2D>().gravityScale = 0;
+            var audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.clip = ActivateLastExitSound;
+            audioSource.Play();
+            StartCoroutine(WaitAudioAndLoadScene(audioSource));
+            return;
+        }
+        EnterRoom(CurrentRoom.Exits.Find(x => x.Id == exitNumber).Target, deltaVector);
+    }
+
+    IEnumerator WaitAudioAndLoadScene(AudioSource audioSource)
+    {
+        while (audioSource.isPlaying) yield return null;
+
+        SceneManager.LoadScene("PuzzleUI");
     }
 
     private void EnterRoom(RoomClass.ExitClass.TargetClass target, Vector3 deltaVector)
@@ -43,6 +64,7 @@ public class RoomGenerator : MonoBehaviour
 
         ShowRoom(Rooms.Find(x => x.Id == target.RoomId));
         Player.transform.position = SpawnHandler.GetSpawnPoint(target.ExitId) + deltaVector;
+        CollectedJewelSprites.ForEach(x => x.GetComponent<Rigidbody2D>().position = Player.transform.position);
 
         SpawnEnemies();
     }
@@ -52,13 +74,15 @@ public class RoomGenerator : MonoBehaviour
         if (EnemyBat == null)
             return;
 
-        var rand = new System.Random(currentRoom.Id);
-        var enemyCount = rand.Next(0, 4);
+        var rand = new System.Random(CurrentRoom.Id);
+        var enemyCount = rand.Next(0, 3);
 
         for (int i = 0; i < enemyCount; i++)
         {
-            var enemyBat = Instantiate(EnemyBat, new Vector3((float)rand.NextDouble() * 256f - 128f, (float)rand.NextDouble() * 208f - 104f, 0), Quaternion.identity);
-            enemies.Add(enemyBat.GetComponent<EnemyBat>());
+            var enemyBatGo = Instantiate(EnemyBat, new Vector3((float)rand.NextDouble() * 256f - 128f, (float)rand.NextDouble() * 208f - 104f, 0), Quaternion.identity);
+            var enemyBat = enemyBatGo.GetComponent<EnemyBat>();
+            enemyBat.Level = DungeonPersistentData.Instance.DungeonLevel;
+            enemies.Add(enemyBat);
         }
     }
 
@@ -74,7 +98,7 @@ public class RoomGenerator : MonoBehaviour
     }
 
     private int currentRoomId = 0;
-    private RoomClass currentRoom => Rooms.Find(x => x.Id == currentRoomId);  
+    public RoomClass CurrentRoom => Rooms.Find(x => x.Id == currentRoomId);  
     private List<RoomClass> Rooms = new List<RoomClass>();
 
     private List<string> possibleSymbols = new List<string>() { "A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3" };
@@ -98,7 +122,7 @@ public class RoomGenerator : MonoBehaviour
 
     public void Awake()
     {
-        GenerateDungeon((int) System.DateTime.UtcNow.Ticks);
+        GenerateDungeon(DungeonPersistentData.Instance.DungeonSeed);
 
         ShowRoom(Rooms[0]);
     }
@@ -200,6 +224,11 @@ public class RoomGenerator : MonoBehaviour
         }
     }
 
+    internal void ActivateExitGlow()
+    {
+        transform.Find("ExitGlow").gameObject.SetActive(true);
+    }
+
     private int GetRandomOppositeExit(int exitId)
     {
         List<int> returnExits = null;
@@ -263,6 +292,8 @@ public class RoomGenerator : MonoBehaviour
             new Vector3(160, -96),
         };
         Altar.transform.position = altarPositions[altarSegment];
+
+        Debug.Log(symbol);
 
         Altar.GetComponent<AltarController>().Select(symbol);
 

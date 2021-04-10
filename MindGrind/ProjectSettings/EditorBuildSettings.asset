@@ -9,10 +9,16 @@ EditorBuildSettings:
     path: Assets/Scenes/Startup.unity
     guid: b39ab20dc1c6ab649a6d4d7215471c84
   - enabled: 1
+    path: Assets/Scenes/StartScreen.unity
+    guid: 1c256a45730f84c4b9b3ab0846e7e17f
+  - enabled: 1
     path: Assets/Scenes/DungeonStart.unity
     guid: 31e566b8affb83b4aa03384a65c7d5ce
   - enabled: 1
     path: Assets/Scenes/GameScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/PuzzleUI.unity
+    guid: 4360fcdbff666b240aa1c59f0e2fd14a
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 2ba370e1e8aa8be478c2052841ca06a8, type: 2}
