@@ -1,8 +1,9 @@
 Library
 Logs
-Packages
+**/Packages/*
 obj
 .vs
 Build
 Temp
 MindGrind_Builds
+!**/Packages/manifest.json
