@@ -80,7 +80,7 @@ public class RoomGenerator : MonoBehaviour
         for (int i = 0; i < enemyCount; i++)
         {
             var enemyBatGo = Instantiate(EnemyBat, new Vector3((float)rand.NextDouble() * 256f - 128f, (float)rand.NextDouble() * 208f - 104f, 0), Quaternion.identity);
-            var enemyBat = enemyBatGo.GetComponent<EnemyBat>();
+            var enemyBat = enemyBatGo.GetComponent<EnemyBatDuck>();
             enemyBat.Level = DungeonPersistentData.Instance.DungeonLevel;
             enemies.Add(enemyBat);
         }

@@ -145,8 +145,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99dc750e75eb045488f00c1d017fabf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AdvanceSinYSpeed: 10
+  AdvanceSinTimeFactor: 2
   BatGetsHitSound: {fileID: 8300000, guid: 57dd461530701714b8dceed4925f4a57, type: 3}
   BatDiesSound: {fileID: 8300000, guid: 4a9294f99977fb347a1f3603be7f0bd4, type: 3}
-  Speed: 100
-  DeccelerationSpeed: 50
-  _gameObject: {fileID: 0}
+  MaxAdvanceSpeed: 30
+  MaxAttackSpeed: 20
+  Speed: 50
+  AttackAccelerationSpeed: 1
+  RunAwaySpeed: 5
+  DecelerationSpeed: 10
